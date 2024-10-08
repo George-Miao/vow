@@ -4,9 +4,9 @@ version = "0.1.0"
 edition = "2021"
 license = "MIT"
 repository = "https://github.com/George-Miao/vow"
-description = "Serde <--> File"
+description = "Serde <--> File made easy"
 keywords = ["compio", "file", "io", "serde", "tokio"]
-categories = ["Filesystems"]
+categories = ["filesystem"]
 
 [dependencies]
 cfg-if = "1.0.0"
