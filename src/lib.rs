@@ -26,7 +26,8 @@ use crate::{
 
 const BUF_SIZE: usize = 1 << 8; // 256 bytes
 
-trait Data: Serialize + DeserializeOwned + MaybeSend {}
+/// Trait alias for types that can be serialized and deserialized.
+pub trait Data: Serialize + DeserializeOwned + MaybeSend {}
 
 impl<T> Data for T where T: Serialize + DeserializeOwned + MaybeSend {}
 
