@@ -4,7 +4,17 @@
 
 Vow is a simple but generic data binding library for Rust. It allows you to bind any type that implements `Serialize + DeserializeOwned` to a file, and keeps the file up-to-date while supporting multiple backends (both synchronous and asynchronous).
 
-Currently [`tokio`](https://tokio.rs) and [`compio`](https://github.com/compio-rs/compio) are supported as asynchronous backends, and [`std::fs`](https://doc.rust-lang.org/std/fs/index.html) is supported as a synchronous backend.
+Supported backends:
+
+- [`tokio`](https://tokio.rs) (async)
+- [`compio`](https://github.com/compio-rs/compio) (async)
+- [`async-std`](https://async.rs) (async)
+- [`std::fs`](https://doc.rust-lang.org/std/fs/index.html) (blocking)
+
+Supported formats:
+
+- `json`
+- `toml`
 
 ## Example
 

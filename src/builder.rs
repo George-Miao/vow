@@ -122,12 +122,12 @@ impl<T, F> VowBuilder<Nothing<T>, F, Async, DefaultFormat> {
     }
 }
 
-impl<T, F, A> VowBuilder<Nothing<T>, F, A, DefaultFormat> {
+impl<T, F, A, Fo> VowBuilder<Nothing<T>, F, A, Fo> {
     /// Set the type of the value but not provide any default value.
     ///
     /// This is useful when you know there's existsing value stored in file and its type, so
     /// we don't need to provide a default value.
-    pub fn with_type<U>(self) -> VowBuilder<Nothing<U>, F, A, DefaultFormat> {
+    pub fn with_type<U>(self) -> VowBuilder<Nothing<U>, F, A, Fo> {
         VowBuilder {
             file: self.file,
             default: Nothing(PhantomData),
@@ -138,7 +138,7 @@ impl<T, F, A> VowBuilder<Nothing<T>, F, A, DefaultFormat> {
     }
 
     /// Set the default value in case the file is empty or has invalid content.
-    pub fn default<U>(self, value: U) -> VowBuilder<Just<U>, F, A, DefaultFormat> {
+    pub fn default<U>(self, value: U) -> VowBuilder<Just<U>, F, A, Fo> {
         VowBuilder {
             default: Just(value),
             file: self.file,
@@ -149,7 +149,7 @@ impl<T, F, A> VowBuilder<Nothing<T>, F, A, DefaultFormat> {
     }
 }
 
-impl<T, F, A> VowBuilder<T, F, A, DefaultFormat> {
+impl<T, F, A, Fo> VowBuilder<T, F, A, Fo> {
     /// When set `true`, [`Vow`] will fail to build if the file already exists and has invalid content.
     #[must_use]
     pub const fn deny_invalid(mut self) -> Self {

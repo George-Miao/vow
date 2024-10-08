@@ -15,11 +15,12 @@ fn main() {
 async fn main() {
     use vow::*;
 
-    let mut data = VowAsync::open_compio("/tmp/data.json")
+    let mut data = VowAsync::open_compio("/tmp/data.toml")
         .default(MyData {
             a: 42,
             b: "hello".to_string(),
         })
+        .toml()
         .overwrite_local()
         .build()
         .await
@@ -32,11 +33,6 @@ async fn main() {
     data.update(|data| data.b += " world!").await.unwrap();
     assert_eq!(data.b, "hello world!");
 
-    data.map(|data| MyData {
-        b: String::new(),
-        ..data
-    })
-    .await
-    .unwrap();
-    assert_eq!(data.b, "");
+    let content = std::fs::read_to_string("/tmp/data.toml").unwrap();
+    assert_eq!(content, "a = 43\nb = \"hello world!\"\n");
 }
