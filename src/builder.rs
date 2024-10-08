@@ -6,10 +6,10 @@ use std::{
 
 use serde::{de::DeserializeOwned, Serialize};
 
-use crate::{format::DefaultFormat, Io, Vow, VowAsync, VowFile, VowFileAsync, VowResult};
 use crate::{
-    format::{Json, ToFormat},
+    format::{self, DefaultFormat, ToFormat},
     marker::{Async, Blocking, Just, Nothing, ToOption},
+    Io, Vow, VowAsync, VowFile, VowFileAsync, VowResult,
 };
 
 /// Builder for [`Vow`].
@@ -172,13 +172,35 @@ impl<T, F, A> VowBuilder<T, F, A, DefaultFormat> {
     }
 }
 
-impl<T, F, A> VowBuilder<T, F, A, Json> {
+#[cfg(feature = "format-json")]
+impl<T, F, A, Fo> VowBuilder<T, F, A, Fo> {
     /// Output the data in JSON format.
     #[must_use]
     #[cfg(feature = "format-json")]
-    pub const fn json(mut self, pretty: bool) -> Self {
-        self.format = Json { pretty };
-        self
+    pub fn json(self, pretty: bool) -> VowBuilder<T, F, A, format::Json> {
+        VowBuilder {
+            format: format::Json { pretty },
+            file: self.file,
+            default: self.default,
+            overwrite: self.overwrite,
+            deny_invalid: self.deny_invalid,
+        }
+    }
+}
+
+#[cfg(feature = "format-toml")]
+impl<T, F, A, Fo> VowBuilder<T, F, A, Fo> {
+    /// Output the data in JSON format.
+    #[must_use]
+    #[cfg(feature = "format-toml")]
+    pub fn toml(self) -> VowBuilder<T, F, A, format::Toml> {
+        VowBuilder {
+            format: format::Toml {},
+            file: self.file,
+            default: self.default,
+            overwrite: self.overwrite,
+            deny_invalid: self.deny_invalid,
+        }
     }
 }
 

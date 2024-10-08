@@ -22,6 +22,7 @@ async fn main() {
             b: "async".to_string(),
         })
         .overwrite_local()
+        .json(true)
         .build()
         .await
         .unwrap();

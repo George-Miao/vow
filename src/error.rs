@@ -18,11 +18,17 @@ pub enum Error {
     #[cfg(feature = "format-json")]
     #[error("Json error: {0}")]
     Json(#[from] serde_json::Error),
+
+    /// Basic toml error
+    #[cfg(feature = "format-toml")]
+    #[error("Toml error: {0}")]
+    Toml(#[from] basic_toml::Error),
 }
 
 impl Error {
     /// Check if the error is caused by invalid data (e.g. bad syntax, unexpected EOF, etc.)
     #[must_use]
+    #[allow(clippy::missing_const_for_fn)]
     pub fn is_invalid_data(&self) -> bool {
         match self {
             #[cfg(feature = "format-json")]
@@ -30,6 +36,8 @@ impl Error {
                 err.classify(),
                 Category::Data | Category::Eof | Category::Syntax
             ),
+            #[cfg(feature = "format-toml")]
+            Self::Toml(_) => true,
             _ => false,
         }
     }
