@@ -18,6 +18,7 @@ impl<F: VowFile> Io<F, Blocking> {
         if let Some(mut current) = current {
             let ret = if overwrite {
                 format::se(self.format, &mut self.buf, &current)?;
+                self.file.set_len(0)?;
                 self.file.write_all(&self.buf)?;
                 current
             } else {

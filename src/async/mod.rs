@@ -63,8 +63,8 @@ impl<F: VowFileAsync> Io<F, Async> {
         if let Some(current) = current {
             let ret = if overwrite {
                 format::se(self.format, buf.as_mut(), &current)?;
+                self.file.set_len(0).await?;
                 tri!(self, self.file.write(buf));
-                self.file.set_len(self.buf.len() as u64).await?;
                 current
             } else {
                 tri!(self, self.file.read(buf));
@@ -79,8 +79,8 @@ impl<F: VowFileAsync> Io<F, Async> {
                             // Overwrite when invalid data is found
                             let mut buf = self.take_buf();
                             format::se(self.format, buf.as_mut(), &current)?;
+                            self.file.set_len(0).await?;
                             tri!(self, self.file.write(buf));
-                            self.file.set_len(self.buf.len() as u64).await?;
                         }
 
                         current
