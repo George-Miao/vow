@@ -12,6 +12,9 @@ mod tokio;
 #[cfg(feature = "backend-compio")]
 mod compio;
 
+#[cfg(feature = "backend-async-std")]
+mod async_std;
+
 macro_rules! tri {
     ($self:ident, $expr:expr) => {{
         let (res, buf) = $expr.await;

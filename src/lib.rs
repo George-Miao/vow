@@ -98,6 +98,16 @@ impl VowAsync<Infallible, tokio::fs::File> {
     }
 }
 
+#[cfg(feature = "backend-async-std")]
+impl VowAsync<Infallible, async_std::fs::File> {
+    /// Open a `tokio` file at the given path.
+    pub fn open_async_std<P: AsRef<Path>>(
+        path: P,
+    ) -> VowBuilder<Nothing<Infallible>, async_std::fs::File, Async, DefaultFormat> {
+        VowBuilder::<_, _, Async, _>::open(path)
+    }
+}
+
 #[cfg(feature = "backend-compio")]
 impl VowAsync<Infallible, compio_fs::File> {
     /// Open a `compio` file at the given path.

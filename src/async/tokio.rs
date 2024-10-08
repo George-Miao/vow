@@ -1,4 +1,4 @@
-use std::path::Path;
+use std::{io::SeekFrom, path::Path};
 
 use crate::{
     r#async::{BufFut, IoFut},
@@ -7,7 +7,7 @@ use crate::{
 
 use tokio::{
     fs::File,
-    io::{AsyncReadExt, AsyncWriteExt},
+    io::{AsyncReadExt, AsyncSeekExt, AsyncWriteExt},
 };
 
 impl VowFileAsync for File {
@@ -50,8 +50,38 @@ impl VowFileAsync for File {
     fn set_len(&mut self, len: u64) -> impl IoFut<()> {
         async move {
             #[allow(clippy::use_self)]
-            File::set_len(self, len).await?;
+            self.seek(SeekFrom::Start(len)).await?;
+            Self::set_len(self, len).await?;
             Ok(())
         }
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use crate::VowFileAsync;
+    use tokio::io::{AsyncReadExt, AsyncSeekExt};
+
+    #[tokio::test]
+    async fn test_write() {
+        let mut file = tokio::fs::OpenOptions::new()
+            .create(true)
+            .read(true)
+            .write(true)
+            .truncate(false)
+            .open("/tmp/tokio")
+            .await
+            .unwrap();
+        let (res, _) =
+            VowFileAsync::write(&mut file, b"{\"a\":43,\"b\":\"tokio!\"}".to_vec()).await;
+
+        res.unwrap();
+
+        let mut buf = vec![];
+
+        file.seek(tokio::io::SeekFrom::Start(0)).await.unwrap();
+        file.read_to_end(&mut buf).await.unwrap();
+
+        assert_eq!(buf, b"{\"a\":43,\"b\":\"tokio!\"}");
     }
 }

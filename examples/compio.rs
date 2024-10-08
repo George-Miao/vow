@@ -1,14 +1,20 @@
 use serde::{Deserialize, Serialize};
-use vow::*;
 
 #[derive(Serialize, Deserialize)]
 struct MyData {
     a: i32,
     b: String,
 }
+#[cfg(not(feature = "backend-compio"))]
+fn main() {
+    panic!("This example requires the 'backend-compio' feature.");
+}
 
+#[cfg(feature = "backend-compio")]
 #[compio::main]
 async fn main() {
+    use vow::*;
+
     let mut data = VowAsync::open_compio("/tmp/data.json")
         .default(MyData {
             a: 42,
