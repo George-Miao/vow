@@ -3,6 +3,10 @@ name = "vow"
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
+repository = "https://github.com/George-Miao/vow"
+description = "Serde <--> File"
+keywords = ["compio", "file", "io", "serde", "tokio"]
+categories = ["Filesystems"]
 
 [dependencies]
 cfg-if = "1.0.0"

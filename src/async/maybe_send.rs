@@ -1,8 +1,7 @@
 use cfg_if::cfg_if;
 
 cfg_if! {
-
-    if #[cfg(any(feature = "backend-tokio", feature = "send"))] {
+    if #[cfg(feature = "send")] {
         #[doc(hidden)]
         pub trait MaybeSend: Send {}
         impl<T: Send + ?Sized> MaybeSend for T {}

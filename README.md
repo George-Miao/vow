@@ -1,8 +1,8 @@
 # Vow
 
-Vow is a simple but generic data binding library for Rust.
+`Serde <--> File` made easy.
 
-It allows you to bind any type that implements `serde::Serialize + DeserializeOwned` to a file, and keeps the file up-to-date while supporting multiple backends (both synchronous and asynchronous).
+Vow is a simple but generic data binding library for Rust. It allows you to bind any type that implements `Serialize + DeserializeOwned` to a file, and keeps the file up-to-date while supporting multiple backends (both synchronous and asynchronous).
 
 Currently [`tokio`](https://tokio.rs) and [`compio`](https://github.com/compio-rs/compio) are supported as asynchronous backends, and [`std::fs`](https://doc.rust-lang.org/std/fs/index.html) is supported as a synchronous backend.
 
