@@ -1,4 +1,5 @@
 #![doc = include_str!("../README.md")]
+#![cfg_attr(docsrs, feature(doc_cfg))]
 #![warn(clippy::nursery, clippy::pedantic, missing_docs)]
 #![allow(
     private_interfaces,
@@ -153,3 +154,6 @@ impl<F, A> Io<F, A> {
         buf
     }
 }
+
+#[cfg(docsrs)]
+compile_error!("docs.rs");
