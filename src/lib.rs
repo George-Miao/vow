@@ -33,12 +33,14 @@ pub trait Data: Serialize + DeserializeOwned + MaybeSend {}
 impl<T> Data for T where T: Serialize + DeserializeOwned + MaybeSend {}
 
 /// Synchronously binds data to a file.
+#[derive(Debug, Clone)]
 pub struct Vow<T, F> {
     pub(crate) value: Option<T>,
     pub(crate) io: Io<F, Blocking>,
 }
 
 /// Asynchronously binds data to a file.
+#[derive(Debug, Clone)]
 pub struct VowAsync<T, F> {
     pub(crate) value: Option<T>,
     pub(crate) io: Io<F, Async>,
@@ -129,6 +131,7 @@ impl<T, F: VowFileAsync> VowAsync<T, F> {
     }
 }
 /// Underlying file operations.
+#[derive(Debug, Clone)]
 struct Io<F, A> {
     pub(crate) file: F,
     pub(crate) buf: Vec<u8>,

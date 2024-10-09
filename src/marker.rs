@@ -4,10 +4,23 @@ use crate::MaybeSend;
 
 trait Seal {}
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 pub struct Just<T>(pub(crate) T);
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Nothing<T>(pub(crate) PhantomData<T>);
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 pub struct Async {}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 pub struct Blocking {}
+
+impl<T> Default for Nothing<T> {
+    fn default() -> Self {
+        Self(PhantomData)
+    }
+}
 
 pub trait ToOption: Seal + MaybeSend {
     type Some: MaybeSend;

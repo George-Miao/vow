@@ -51,7 +51,7 @@ cfg_if::cfg_if! {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum Format {
     #[cfg(feature = "format-json")]
     Json { pretty: bool },
