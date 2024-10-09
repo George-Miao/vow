@@ -103,7 +103,7 @@ impl VowAsync<Infallible, tokio::fs::File> {
 
 #[cfg(feature = "backend-async-std")]
 impl VowAsync<Infallible, async_std::fs::File> {
-    /// Open a `tokio` file at the given path.
+    /// Open an `async_std` file at the given path.
     pub fn open_async_std<P: AsRef<Path>>(
         path: P,
     ) -> VowBuilder<Nothing<Infallible>, async_std::fs::File, Async, DefaultFormat> {
@@ -157,6 +157,3 @@ impl<F, A> Io<F, A> {
         buf
     }
 }
-
-#[cfg(docsrs)]
-compile_error!("docs.rs");

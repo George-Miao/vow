@@ -29,14 +29,14 @@ serde_json = { version = "1.0.128", optional = true }
 basic-toml = { version = "0.1.9", optional = true }
 
 [features]
-default = ["format-json"]
+default = ["backend-tokio", "format-json", "send"]
 # Wether futures should be send. Depend on the runtime, this may be required or not.
 send = []
 
 # Enable support for compio backend. Caution: compio and send features cannot be enabled at the same time.
 backend-compio = ["dep:compio-driver", "dep:compio-fs", "dep:compio-io"]
 # Enable support for tokio backend
-backend-tokio = ["dep:tokio", "send"]
+backend-tokio = ["dep:tokio"]
 # Enable support for async-std backend
 backend-async-std = ["dep:async-std"]
 

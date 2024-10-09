@@ -123,10 +123,10 @@ impl<T, F> VowBuilder<Nothing<T>, F, Async, DefaultFormat> {
 }
 
 impl<T, F, A, Fo> VowBuilder<Nothing<T>, F, A, Fo> {
-    /// Set the type of the value but not provide any default value.
+    /// Set the type of the value without providing anything concrete.
     ///
     /// This is useful when you know there's existsing value stored in file and its type, so
-    /// we don't need to provide a default value.
+    /// we can just retrieve it during initialization.
     pub fn with_type<U>(self) -> VowBuilder<Nothing<U>, F, A, Fo> {
         VowBuilder {
             file: self.file,
